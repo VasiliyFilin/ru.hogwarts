@@ -1,5 +1,7 @@
 package ru.hogwarts.school.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.service.FacultyService;
@@ -16,8 +18,12 @@ public class FacultyController {
     }
 
     @GetMapping("{id}") // GET http://localhost:8080/faculty/2
-    public Faculty getFaculty(@PathVariable Long id) {
-        return facultyService.findFaculty(id);
+    public ResponseEntity<Faculty> getFaculty(@PathVariable Long id) {
+        Faculty faculty = facultyService.findFaculty(id);
+        if (faculty == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(faculty);
     }
 
     @PostMapping // POST http://localhost:8080/faculty
@@ -26,17 +32,22 @@ public class FacultyController {
     }
 
     @PutMapping// PUT http://localhost:8080/faculty
-    public Faculty editFaculty(@RequestBody Faculty faculty) {
-        return facultyService.editFaculty(faculty);
+    public ResponseEntity<Faculty> editFaculty(@RequestBody Faculty faculty) {
+        Faculty foundFaculty = facultyService.editFaculty(faculty);
+        if (foundFaculty == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.ok(foundFaculty);
     }
 
     @DeleteMapping("{id}") // DELETE http://localhost:8080/faculty/2
-    public Faculty removeFaculty(@PathVariable Long id) {
-        return facultyService.removeFaculty(id);
+    public ResponseEntity<Faculty> removeFaculty(@PathVariable Long id) {
+        facultyService.removeFaculty(id);
+        return ResponseEntity.ok().build();
     }
     @GetMapping("colorFilter") // GET http://localhost:8080/faculty
-    public Collection<Faculty> colorFilter(@RequestParam String color) {
-        return facultyService.colorFilter(color);
+    public Collection<Faculty> findByColor(@RequestParam String color) {
+        return facultyService.findByColor(color);
     }
 
 }
