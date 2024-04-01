@@ -22,12 +22,12 @@ class FacultyServiceTest {
     FacultyService facultyService;
 
 
-    Faculty faculty1 = new Faculty(0L, "Gryffindor", "Red");
-    Faculty faculty2 = new Faculty(0L, "Slytherinn", "Green");
-    Faculty editedFaculty2 = new Faculty(2L, "Slytherin", "Green");
-    Faculty faculty3 = new Faculty(0L, "Ravenclaw", "Blue");
+    Faculty faculty1 = new Faculty("Gryffindor", "Red");
+    Faculty faculty2 = new Faculty("Slytherinn", "Green");
+    Faculty editedFaculty2 = new Faculty("Slytherin", "Green");
+    Faculty faculty3 = new Faculty("Ravenclaw", "Blue");
     List<Faculty> faculties = new ArrayList<>(List.of(faculty1, faculty2, faculty3));
-    Faculty faculty4 = new Faculty(0L, "Hufflepuff", "Yellow");
+    Faculty faculty4 = new Faculty("Hufflepuff", "Yellow");
 
 
     @Test

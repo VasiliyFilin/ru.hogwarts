@@ -21,12 +21,12 @@ class StudentServiceTest {
     @InjectMocks
     StudentService studentService;
 
-    Student student1 = new Student(0L, "Harry Potter", 15);
-    Student student2 = new Student(0L, "Germione Granger", 15);
-    Student editedStudent2 = new Student(0L, "Hermione Granger", 15);
-    Student student3 = new Student(0L, "Ron Weasley", 15);
+    Student student1 = new Student("Harry Potter", 15);
+    Student student2 = new Student("Germione Granger", 15);
+    Student editedStudent2 = new Student("Hermione Granger", 15);
+    Student student3 = new Student("Ron Weasley", 15);
     List<Student> students = new ArrayList<>(List.of(student1, student2, student3));
-    Student student4 = new Student(0L, "Draco Malfoy", 14);
+    Student student4 = new Student("Draco Malfoy", 14);
 
 
     @Test
