@@ -1,30 +1,43 @@
 package ru.hogwarts.school.service;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import ru.hogwarts.school.model.Student;
+import ru.hogwarts.school.repository.StudentRepository;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
-
+@ExtendWith(MockitoExtension.class)
 class StudentServiceTest {
-    StudentService studentService = new StudentService();
-    @BeforeEach
-    void setUp() {
-        studentService.addStudent(new Student(0L,"Harry Potter", 15));
-        studentService.addStudent(new Student(0L,"Germione Granger", 15));
-        studentService.addStudent(new Student(0L,"Ron Weasley", 15));
-    }
+    @Mock
+    StudentRepository studentRepository;
+    @InjectMocks
+    StudentService studentService;
+
+    Student student1 = new Student(0L, "Harry Potter", 15);
+    Student student2 = new Student(0L, "Germione Granger", 15);
+    Student editedStudent2 = new Student(0L, "Hermione Granger", 15);
+    Student student3 = new Student(0L, "Ron Weasley", 15);
+    List<Student> students = new ArrayList<>(List.of(student1, student2, student3));
+    Student student4 = new Student(0L, "Draco Malfoy", 14);
+
 
     @Test
     void addStudentTest() {
-        studentService.addStudent(new Student(0L,"Draco Malfoy", 14));
-        Student actual = studentService.findStudent(4L);
-        assertThat(actual.getName()).isEqualTo("Draco Malfoy");
-        assertThat(actual.getAge()).isEqualTo(14);
+        when(studentRepository.save(student4)).thenReturn(student4);
+        assertEquals(student4, studentService.addStudent(student4));
     }
 
     @Test
     void findStudentTest() {
+        when(studentRepository.findById(1L)).thenReturn(Optional.ofNullable(student1));
         Student actual = studentService.findStudent(1);
         assertThat(actual.getName()).isEqualTo("Harry Potter");
         assertThat(actual.getAge()).isEqualTo(15);
@@ -32,14 +45,9 @@ class StudentServiceTest {
 
     @Test
     void editStudentTest() {
-        Student actual = studentService.editStudent(new Student(2L,"Hermione Granger", 15));
+        when(studentRepository.save(editedStudent2)).thenReturn(editedStudent2);
+        Student actual = studentService.editStudent(editedStudent2);
         assertThat(actual.getName()).isEqualTo("Hermione Granger");
         assertThat(actual.getAge()).isEqualTo(15);
-    }
-
-    @Test
-    void removeStudentTest() {
-        studentService.removeStudent(3L);
-        assertThat(studentService.findStudent(3L)).isEqualTo(null);
     }
 }

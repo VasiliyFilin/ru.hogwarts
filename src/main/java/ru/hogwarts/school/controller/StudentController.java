@@ -1,5 +1,7 @@
 package ru.hogwarts.school.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
@@ -16,8 +18,12 @@ public class StudentController {
     }
 
     @GetMapping("{id}") // GET http://localhost:8080/student/2
-    public Student getStudent(@PathVariable Long id) {
-        return studentService.findStudent(id);
+    public ResponseEntity<Student> getStudent(@PathVariable Long id) {
+        Student student = studentService.findStudent(id);
+        if (student == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(student);
     }
 
     @PostMapping // POST http://localhost:8080/student
@@ -26,17 +32,22 @@ public class StudentController {
     }
 
     @PutMapping// PUT http://localhost:8080/student
-    public Student editStudent(@RequestBody Student student) {
-        return studentService.editStudent(student);
+    public ResponseEntity<Student> editStudent(@RequestBody Student student) {
+        Student foundStudent = studentService.editStudent(student);
+        if (student == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.ok(foundStudent);
     }
 
     @DeleteMapping("{id}") // DELETE http://localhost:8080/student/2
-    public Student removeStudent(@PathVariable Long id) {
-        return studentService.removeStudent(id);
+    public ResponseEntity<Student> removeStudent(@PathVariable Long id) {
+        studentService.removeStudent(id);
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("ageFilter") // GET http://localhost:8080/student
-    public Collection<Student> ageFilter(@RequestParam int age) {
-        return studentService.ageFilter(age);
+    public Collection<Student> findByAge(@RequestParam int age) {
+        return studentService.findByAge(age);
     }
 }
