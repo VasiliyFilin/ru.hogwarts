@@ -45,8 +45,9 @@ class StudentServiceTest {
 
     @Test
     void editStudentTest() {
-        when(studentRepository.save(editedStudent2)).thenReturn(editedStudent2);
-        Student actual = studentService.editStudent(editedStudent2);
+        when(studentRepository.findById(student2.getId())).thenReturn(Optional.ofNullable(student2));
+        when(studentRepository.save(student2)).thenReturn(editedStudent2);
+        Student actual = studentService.editStudent(student2);
         assertThat(actual.getName()).isEqualTo("Hermione Granger");
         assertThat(actual.getAge()).isEqualTo(15);
     }
