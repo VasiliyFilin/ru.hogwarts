@@ -32,7 +32,7 @@ class StudentControllerTestRestTemplate {
 
     @Test
     public void getStudentTest() throws Exception {
-        Student testStudent = new Student("Test_Student", 15);
+        Student testStudent = new Student("Test_Student", 16);
         ResponseEntity<Student> postResponse = restTemplate.postForEntity(
                 "/student", testStudent, Student.class);
         Student postResult = postResponse.getBody();
@@ -40,14 +40,14 @@ class StudentControllerTestRestTemplate {
         Student result = restTemplate.getForObject("/student/" + postResult.getId(), Student.class);
         assertThat(result).isNotNull();
         assertThat(result.getName()).isEqualTo("Test_Student");
-        assertThat(result.getAge()).isEqualTo(15);
+        assertThat(result.getAge()).isEqualTo(16);
         assertThat(this.restTemplate.exchange("/student/-1", HttpMethod.GET, null, Student.class)
                 .getStatusCode().value()).isEqualTo(404);
     }
 
     @Test
     public void postStudentTest() throws Exception {
-        Student testStudent = new Student("Test_Student", 15);
+        Student testStudent = new Student("Test_Student", 16);
         ResponseEntity<Student> postResponse = restTemplate.postForEntity(
                 "/student", testStudent, Student.class);
         Student postResult = postResponse.getBody();
@@ -58,7 +58,7 @@ class StudentControllerTestRestTemplate {
     }
     @Test
     void removeStudentTest() {
-        Student testStudent = new Student("Test_Student", 15);
+        Student testStudent = new Student("Test_Student", 16);
         ResponseEntity<Student> postResponse = restTemplate.postForEntity(
                 "/student", testStudent, Student.class);
         Student postResult = postResponse.getBody();
@@ -71,18 +71,18 @@ class StudentControllerTestRestTemplate {
     }
     @Test
     void editStudentTest() {
-        Student testStudent = new Student("Test_Student", 15);
+        Student testStudent = new Student("Test_Student", 16);
         ResponseEntity<Student> postResponse = restTemplate.postForEntity(
                 "/student", testStudent, Student.class);
         Student postResult = postResponse.getBody();
         postResult.setName("Tested_Student");
-        postResult.setAge(16);
+        postResult.setAge(17);
 
         restTemplate.put("/student", postResult);
 
         Student result = restTemplate.getForObject("/student/" + postResult.getId(), Student.class);
         assertThat(result.getName()).isEqualTo("Tested_Student");
-        assertThat(result.getAge()).isEqualTo(16);
+        assertThat(result.getAge()).isEqualTo(17);
     }
     @Test
     void findByAgeTest() {
