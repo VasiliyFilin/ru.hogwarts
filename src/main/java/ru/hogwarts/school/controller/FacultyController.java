@@ -54,7 +54,7 @@ public class FacultyController {
         return facultyService.findByNameOrColor(name, color);
     }
     @GetMapping("{id}/students") // GET http://localhost:8080/faculty/2/students
-    public Collection<Student> getStudentFaculty(@PathVariable Long id) {
+    public Collection<Student> getFacultyStudent(@PathVariable Long id) {
         return facultyService.findFaculty(id).getStudents();
     }
 
