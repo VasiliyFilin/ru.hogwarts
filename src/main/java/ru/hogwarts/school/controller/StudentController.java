@@ -6,6 +6,8 @@ import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.List;
+
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -107,5 +109,23 @@ public class StudentController {
             response.setContentLength((int) avatar.getFileSize());
             is.transferTo(os);
         }
+    }
+    @GetMapping("/amount")
+    public Integer getAllStudentsAmount() {
+        return studentService.getAllStudentsAmount();
+    }
+    @GetMapping("/avg-age")
+    public Integer getStudentsAvgAge() {
+        return studentService.getStudentsAvgAge();
+    }
+    @GetMapping("/lastStudents")
+    public List<Student> getLastStudents() {
+        return studentService.getLastStudents();
+    }
+
+    @GetMapping("/avatarsList")
+    public List<Avatar> getAvatarList(@RequestParam("page") Integer pageNum,
+                                      @RequestParam("size") Integer pageSize) {
+        return studentService.getAvatarPage(pageNum, pageSize);
     }
 }

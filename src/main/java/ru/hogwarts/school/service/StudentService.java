@@ -7,8 +7,10 @@ import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Collection;
+import java.util.List;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.school.model.Avatar;
@@ -106,5 +108,22 @@ public class StudentService {
             ImageIO.write(preview, getExtension(filePath.getFileName().toString()), baos);
             return baos.toByteArray();
         }
+    }
+
+    public Integer getAllStudentsAmount() {
+        return studentRepository.getAllStudentsAmount();
+    }
+
+    public Integer getStudentsAvgAge() {
+        return studentRepository.getStudentsAvgAge();
+    }
+
+    public List<Student> getLastStudents() {
+        return studentRepository.getLastStudents();
+    }
+
+    public List<Avatar> getAvatarPage(Integer pageNum, Integer pageSize) {
+        PageRequest pageRequest = PageRequest.of(pageNum - 1, pageSize);
+        return avatarRepository.findAll(pageRequest).getContent();
     }
 }
