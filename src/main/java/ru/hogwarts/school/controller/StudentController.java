@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import ru.hogwarts.school.model.Avatar;
 import ru.hogwarts.school.model.Faculty;
 import ru.hogwarts.school.model.Student;
 import ru.hogwarts.school.service.StudentService;
@@ -82,9 +81,4 @@ public class StudentController {
         return studentService.getLastStudents();
     }
 
-    @GetMapping("/avatarsList")
-    public List<Avatar> getAvatarList(@RequestParam("page") Integer pageNum,
-                                      @RequestParam("size") Integer pageSize) {
-        return studentService.getAvatarPage(pageNum, pageSize);
-    }
 }
