@@ -80,5 +80,14 @@ public class StudentController {
     public List<Student> getLastStudents() {
         return studentService.getLastStudents();
     }
+    @GetMapping("/namesStartA")
+    public Collection<String> findNamesStartWithCharA() {
+        return studentService.findNamesStartWithCharA();
+    }
+    @GetMapping("/all-avg-age")
+    public double findAllAvgAge() {
+        return studentService.findAllAvgAge();
+    }
+
 
 }
