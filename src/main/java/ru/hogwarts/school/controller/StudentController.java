@@ -2,6 +2,7 @@ package ru.hogwarts.school.controller;
 
 import java.util.Collection;
 import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -68,26 +69,39 @@ public class StudentController {
     public Faculty getStudentFaculty(@PathVariable Long id) {
         return studentService.findStudent(id).getFaculty();
     }
+
     @GetMapping("/amount")
     public Integer getAllStudentsAmount() {
         return studentService.getAllStudentsAmount();
     }
+
     @GetMapping("/avg-age")
     public Integer getStudentsAvgAge() {
         return studentService.getStudentsAvgAge();
     }
+
     @GetMapping("/lastStudents")
     public List<Student> getLastStudents() {
         return studentService.getLastStudents();
     }
+
     @GetMapping("/namesStartA")
     public Collection<String> findNamesStartWithCharA() {
         return studentService.findNamesStartWithCharA();
     }
+
     @GetMapping("/all-avg-age")
     public double findAllAvgAge() {
         return studentService.findAllAvgAge();
     }
 
+    @GetMapping("/students/print-parallel")
+    public void printParallel() {
+        studentService.printParallel();
+    }
 
+    @GetMapping("/students/print-synchronized")
+    public void printSynchronized() {
+        studentService.printSynchronized();
+    }
 }

@@ -2,6 +2,7 @@ package ru.hogwarts.school.service;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 import jakarta.transaction.Transactional;
@@ -93,5 +94,37 @@ public class StudentService {
                 .mapToDouble(Student::getAge)
                 .average()
                 .orElse(0);
+    }
+
+    public void printParallel() {
+        List<Student> students = studentRepository.findAll();
+        System.out.println(students.get(0));
+        System.out.println(students.get(1));
+        new Thread(() -> {
+            System.out.println(students.get(2));
+            System.out.println(students.get(3));
+        }).start();
+        new Thread(() -> {
+            System.out.println(students.get(4));
+            System.out.println(students.get(5));
+        }).start();
+    }
+
+    public void printSynchronized() {
+        List<Student> students = studentRepository.findAll();
+        print(students.get(0));
+        print(students.get(1));
+        new Thread(() -> {
+            print(students.get(2));
+            print(students.get(3));
+        }).start();
+        new Thread(() -> {
+            print(students.get(4));
+            print(students.get(5));
+        }).start();
+
+    }
+    private synchronized void print(Object o) {
+        System.out.println(o);
     }
 }
